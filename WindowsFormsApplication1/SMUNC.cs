@@ -9,29 +9,28 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SMUNC;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace WindowsFormsApplication1
 {
 
     public partial class Form1 : Form
     {
-        bool first = true;
-        int speakers = new int();
-        int _speakers = new int();
-        int speakers2 = new int();
-        int _speakers2 = new int();
-        int caucustime = new int();
-        int ctst = new int();
-        int _ctst = new int();
-        //int height = new int();
-        //int part = new int();
-        int countriespresent = new int();
-        bool timeset = new bool();
-        bool timeset2 = new bool();
-        bool ctset = new bool();
-        List<string> _countries = new List<string>();
-        List<string> _countries2 = new List<string>();
-        List<string> attend = new List<string>();
+        bool first = true; //used to highlight textbox1 at first start
+        int speakers = new int(); //sets the PSL speakers time
+        int _speakers = new int(); //used to countdown PSL speakers time
+        int speakers2 = new int(); //sets SPL speakers time
+        int _speakers2 = new int(); //used to countdown SPL speakers time
+        int caucustime = new int(); //sets time for caucus
+        int ctst = new int(); //sets speakers time for caucus
+        int _ctst = new int(); //used to countdown speakers time for caucus
+        int countriespresent = new int(); //number of countries not absent
+        bool timeset = new bool(); //checks to see if PSL speakers time was set
+        bool timeset2 = new bool();//checks to see if SSL speakers time was set
+        bool ctset = new bool(); //checks to see if caucus time speakers time was set
+        List<string> _countries = new List<string>(); //used to feed PSL country list
+        List<string> _countries2 = new List<string>(); //used to feed SPL country list
+        List<string> attend = new List<string>(); 
         List<string> attendsave = new List<string>();
         public Form1()
         {
@@ -156,6 +155,7 @@ namespace WindowsFormsApplication1
                     label3.Text = speakers.ToString();
                     if (radioButton8.Checked == true) //check if custom radio button time is checked
                     {
+                      
                         if (textBox2.Text.Contains(":"))
                         {
                             string time = "00:" + textBox2.Text; //fetches mm:ss info to convert into seconds
@@ -384,11 +384,7 @@ namespace WindowsFormsApplication1
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            if (Convert.ToInt64(textBox2.Text) > 2147483647)
-            {
-                textBox2.Text = "2147483647";
-                System.Media.SystemSounds.Exclamation.Play();
-            }
+           
         }
 
         private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
@@ -596,11 +592,7 @@ namespace WindowsFormsApplication1
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            if (Convert.ToInt64(textBox3.Text) > 2147483647)
-            {
-                textBox3.Text = "2147483647";
-                System.Media.SystemSounds.Exclamation.Play();
-            }
+
         }
 
         private void textBox1_Click(object sender, EventArgs e)
@@ -1206,6 +1198,61 @@ namespace WindowsFormsApplication1
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
             this.dataGridView2.ClearSelection();
+        }
+
+        private void textBox2_Leave(object sender, EventArgs e)
+        {
+            if (textBox2.Text.Contains(":"))
+            {
+                var input = textBox2.Text; // or what ever your input is. 
+                var regex = new Regex("^[0-9]:[0-9]{2}$");
+                var regex2 = new Regex("^[0-9]{2}:[0-9]{2}$");
+                var match = regex.Match(input);
+                var match2 = regex2.Match(input);
+
+                if (!match.Success & !match2.Success)
+                {
+                    MessageBox.Show("Please enter correct format (MM:SS or SS)!");
+                    textBox2.Text = "";
+                }
+            }
+            
+        }
+        private void textBox3_Leave(object sender, EventArgs e)
+        {
+            if (textBox3.Text.Contains(":"))
+            {
+            var input = textBox3.Text; // or what ever your input is. 
+            var regex = new Regex("^[0-9]:[0-9]{2}$");
+            var regex2 = new Regex("^[0-9]{2}:[0-9]{2}$");
+            var match = regex.Match(input);
+            var match2 = regex2.Match(input);
+
+            if (!match.Success & !match2.Success)
+            {
+                MessageBox.Show("Please enter correct format (MM:SS or SS)!");
+                textBox3.Text = "";
+            }
+            }
+           
+        }
+
+        private void textBox4_Leave(object sender, EventArgs e)
+        {
+            if (textBox4.Text.Contains(":"))
+            {
+                var input = textBox4.Text; // or what ever your input is. 
+                var regex = new Regex("^[0-9]:[0-9]{2}$");
+                var regex2 = new Regex("^[0-9]{2}:[0-9]{2}$");
+                var match = regex.Match(input);
+                var match2 = regex2.Match(input);
+
+                if (!match.Success & !match2.Success)
+                {
+                    MessageBox.Show("Please enter correct format (MM:SS or MM)!");
+                    textBox4.Text = "";
+                }
+            }
         }
     }
 }

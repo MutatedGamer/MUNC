@@ -200,7 +200,7 @@
             this.tabPage1.Controls.Add(this.listBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 38);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(883, 569);
+            this.tabPage1.Size = new System.Drawing.Size(900, 619);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Primary Speakers List";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -214,7 +214,7 @@
             this.listBox1.ItemHeight = 37;
             this.listBox1.Location = new System.Drawing.Point(0, 0);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(883, 569);
+            this.listBox1.Size = new System.Drawing.Size(900, 619);
             this.listBox1.TabIndex = 0;
             // 
             // tabPage2
@@ -222,7 +222,7 @@
             this.tabPage2.Controls.Add(this.listBox2);
             this.tabPage2.Location = new System.Drawing.Point(4, 38);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(883, 569);
+            this.tabPage2.Size = new System.Drawing.Size(900, 619);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Crisis Speakers List";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -236,7 +236,7 @@
             this.listBox2.ItemHeight = 37;
             this.listBox2.Location = new System.Drawing.Point(0, 0);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(883, 569);
+            this.listBox2.Size = new System.Drawing.Size(900, 619);
             this.listBox2.TabIndex = 21;
             // 
             // tabPage4
@@ -447,6 +447,7 @@
             this.textBox4.Size = new System.Drawing.Size(121, 44);
             this.textBox4.TabIndex = 3;
             this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox4_KeyPress);
+            this.textBox4.Leave += new System.EventHandler(this.textBox4_Leave);
             // 
             // label4
             // 
@@ -489,7 +490,7 @@
             this.tabPage3.Controls.Add(this.richTextBox1);
             this.tabPage3.Location = new System.Drawing.Point(4, 38);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(883, 569);
+            this.tabPage3.Size = new System.Drawing.Size(900, 619);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Notes";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -500,7 +501,7 @@
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox1.Location = new System.Drawing.Point(0, 0);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(883, 569);
+            this.richTextBox1.Size = new System.Drawing.Size(900, 619);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
@@ -509,7 +510,7 @@
             this.tabPage5.Controls.Add(this.dataGridView1);
             this.tabPage5.Location = new System.Drawing.Point(4, 38);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(883, 569);
+            this.tabPage5.Size = new System.Drawing.Size(900, 619);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Attendance";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -537,7 +538,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(883, 569);
+            this.dataGridView1.Size = new System.Drawing.Size(900, 619);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseUp);
@@ -578,7 +579,7 @@
             this.tabPage6.Controls.Add(this.dataGridView2);
             this.tabPage6.Location = new System.Drawing.Point(4, 38);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(883, 569);
+            this.tabPage6.Size = new System.Drawing.Size(900, 619);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Voting Procedures";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -606,7 +607,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(0, 0);
             this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(883, 569);
+            this.dataGridView2.Size = new System.Drawing.Size(900, 619);
             this.dataGridView2.TabIndex = 3;
             this.dataGridView2.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView2_CellMouseUp);
             this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
@@ -860,12 +861,14 @@
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(110, 65);
+            this.textBox2.MaxLength = 8;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(60, 20);
             this.textBox2.TabIndex = 18;
             this.textBox2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBox2_MouseClick);
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
+            this.textBox2.Leave += new System.EventHandler(this.textBox2_Leave);
             // 
             // groupBox2
             // 
@@ -890,12 +893,14 @@
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(110, 65);
+            this.textBox3.MaxLength = 8;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(60, 20);
             this.textBox3.TabIndex = 18;
             this.textBox3.Click += new System.EventHandler(this.textBox3_Click);
             this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
+            this.textBox3.Leave += new System.EventHandler(this.textBox3_Leave);
             // 
             // radioButton9
             // 
