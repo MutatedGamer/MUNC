@@ -307,6 +307,10 @@ namespace WindowsFormsApplication1
                     label3.Text = _ctst.ToString();
                     label1.Text = "";
                     System.Media.SystemSounds.Beep.Play();
+                     if(timer2.Enabled==false)
+                     {
+                         button6.Text = "Start";
+                     }
 
                   }
               }
@@ -380,7 +384,11 @@ namespace WindowsFormsApplication1
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-
+            if (Convert.ToInt64(textBox2.Text) > 2147483647)
+            {
+                textBox2.Text = "2147483647";
+                System.Media.SystemSounds.Exclamation.Play();
+            }
         }
 
         private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
@@ -532,6 +540,10 @@ namespace WindowsFormsApplication1
             timeset = false;
             timeset2 = false;
             ctset = false;
+            dataGridView1.RowsDefaultCellStyle.BackColor = Color.White;
+            dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.SkyBlue;
+            dataGridView2.RowsDefaultCellStyle.BackColor = Color.White;
+            dataGridView2.AlternatingRowsDefaultCellStyle.BackColor = Color.SkyBlue;
         }
 
         private void radioButton9_CheckedChanged(object sender, EventArgs e)
@@ -584,7 +596,11 @@ namespace WindowsFormsApplication1
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-
+            if (Convert.ToInt64(textBox3.Text) > 2147483647)
+            {
+                textBox3.Text = "2147483647";
+                System.Media.SystemSounds.Exclamation.Play();
+            }
         }
 
         private void textBox1_Click(object sender, EventArgs e)
@@ -637,7 +653,7 @@ namespace WindowsFormsApplication1
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (textBox4.Text != "")
+            if (textBox4.Text != "" & textBox4.Text.Contains("1") == true || textBox4.Text.Contains("2") == true || textBox4.Text.Contains("3") == true || textBox4.Text.Contains("4") == true || textBox4.Text.Contains("5") == true || textBox4.Text.Contains("6") == true || textBox4.Text.Contains("7") == true || textBox4.Text.Contains("8") == true || textBox4.Text.Contains("9") == true)
             {
                 if (radioButton17.Checked == true)
                 {
@@ -680,7 +696,7 @@ namespace WindowsFormsApplication1
                             TimeSpan ts = TimeSpan.FromSeconds(caucustime);
                             label8.Text = ts.ToString(@"mm\:ss");
                         }
-                        if (radioButton20.Checked == true & textBox5.Text != "")
+                        if (radioButton20.Checked == true & textBox5.Text != "" & button6.Text == "Stop")
                         {
 
                             if (textBox5.Text.Contains(":"))
@@ -818,7 +834,10 @@ namespace WindowsFormsApplication1
 
                 System.Media.SystemSounds.Beep.Play();
                 timer2.Enabled = false;
-                button6.Text = "Start";
+                if (timer1.Enabled ==false)
+                {
+                    button6.Text = "Start";
+                }
             }
         }
 
@@ -880,15 +899,25 @@ namespace WindowsFormsApplication1
 
         private void button8_Click(object sender, EventArgs e)
         {
-            if(timer2.Enabled==true)
+            if(timer2.Enabled==true & caucustime!=0)
             {
                 button8.Text = "▶";
                 timer2.Enabled = false;
-                timer1.Enabled = false;
                 button6.Enabled = false;
-            }else
+            }else if(timer2.Enabled==false & caucustime!=0)
             {
                 timer2.Enabled = true;
+                button8.Text = "▌ ▌";
+                button6.Enabled = true;
+            }
+            if(timer1.Enabled==true & _ctst!=0)
+            {
+                button8.Text = "▶";
+                timer1.Enabled = false;
+                button6.Enabled = false;
+            }
+            else if (timer1.Enabled == false & _ctst != 0)
+            {
                 timer1.Enabled = true;
                 button8.Text = "▌ ▌";
                 button6.Enabled = true;
@@ -970,7 +999,7 @@ namespace WindowsFormsApplication1
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
-            if (openFileDialog1.FileName != "")
+            if (openFileDialog1.FileName != "" & openFileDialog1.FileName.Contains(".txt"))
             {
                 tabControl1.SelectedTab = tabPage5;
                 while (dataGridView1.Rows.Count > 0)
@@ -1167,6 +1196,16 @@ namespace WindowsFormsApplication1
         {
             Form2 frm = new Form2();
             frm.Show();
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            this.dataGridView1.ClearSelection();
+        }
+
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+            this.dataGridView2.ClearSelection();
         }
     }
 }
