@@ -28,6 +28,7 @@ namespace WindowsFormsApplication1
         bool timeset = new bool(); //checks to see if PSL speakers time was set
         bool timeset2 = new bool();//checks to see if SSL speakers time was set
         bool ctset = new bool(); //checks to see if caucus time speakers time was set
+        bool havetowarn = new bool();
         List<string> _countries = new List<string>(); //used to feed PSL country list
         List<string> _countries2 = new List<string>(); //used to feed SPL country list
         List<string> attend = new List<string>(); 
@@ -72,6 +73,7 @@ namespace WindowsFormsApplication1
                      DataGridViewRow row = dataGridView1.Rows[0];
                     dataGridView1.RowTemplate.Height = row.Height;
                     textBox1.Text = "";
+                    dataGridView1.ClearSelection();
                  }
               }
          }
@@ -118,6 +120,14 @@ namespace WindowsFormsApplication1
                 }
                 listBox2.DataSource = null;
                 listBox2.DataSource = _countries2;
+            }
+            if (tabControl1.SelectedTab == tabPage5)
+            {
+                foreach (DataGridViewRow item in this.dataGridView1.SelectedRows)
+                {
+                    dataGridView1.Rows.RemoveAt(item.Index);
+                    dataGridView1.ClearSelection();
+                }
             }
         }
 
@@ -408,6 +418,7 @@ namespace WindowsFormsApplication1
                 button3.Enabled = true;
                 button5.Enabled = true;
                 button10.Visible = false;
+                button12.Visible = false;
                 if (timeset2==false)
                 {
                     label3.Text = "00";
@@ -435,6 +446,7 @@ namespace WindowsFormsApplication1
                 button3.Enabled = true;
                 button5.Enabled = true;
                 button10.Visible = false;
+                button12.Visible = false;
                 if (timeset==false)
                 {
                     label3.Text = "00";
@@ -449,6 +461,8 @@ namespace WindowsFormsApplication1
                 label9.Visible = true;
                 label8.Visible = true;
                 label3.Text = _ctst.ToString();
+                TimeSpan ts = TimeSpan.FromSeconds(caucustime);
+                label8.Text = ts.ToString(@"mm\:ss");
                 button10.Visible = false;
                 textBox1.Enabled = false;
                 button1.Enabled = false;
@@ -457,19 +471,20 @@ namespace WindowsFormsApplication1
                 button10.Visible = false;
                 button3.Enabled = false;
                 button5.Enabled = false;
-
+                button12.Visible = false;
             }
             else if (tabControl1.SelectedTab == tabPage5)
             {
                 textBox1.Enabled = true;
                 button1.Enabled = true;
-                button2.Enabled = false;
+                button2.Enabled = true;
                 button4.Enabled = false;
                 button3.Enabled = false;
                 button5.Enabled = false;
                 label9.Visible = false;
                 label8.Visible = false;
                 button10.Visible = false;
+                button12.Visible = true;
             }
             else if (tabControl1.SelectedTab == tabPage6)
             {
@@ -483,7 +498,7 @@ namespace WindowsFormsApplication1
                 label8.Visible = false;
                 button10.Visible = true;
                 button1.Enabled = false;
-
+                button12.Visible = false;
             }
             else
             {
@@ -496,6 +511,7 @@ namespace WindowsFormsApplication1
                 button10.Visible = false;
                 button3.Enabled = false;
                 button5.Enabled = false;
+                button12.Visible = false;
             }
             if (tabControl1.SelectedTab == tabPage6)
             {
@@ -521,12 +537,14 @@ namespace WindowsFormsApplication1
                         {
                             row2.Cells[3].ReadOnly = true;
                             row2.Cells[3].Style.BackColor = Color.Gray;
+                            
                         }
                     }
                 }
-
+                dataGridView2.ClearSelection();
 
             }
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -793,6 +811,7 @@ namespace WindowsFormsApplication1
                 radioButton25.Enabled = true;
                 radioButton26.Enabled = true;
                 textBox5.Enabled = true;
+                button7.Enabled = true;
                 //mod caucus stuff
             }
         }
@@ -1112,11 +1131,15 @@ namespace WindowsFormsApplication1
             int remainder=new int();
             int majority=new int();
             majority = Math.DivRem(countriespresent, 2, out remainder);
+            if(countriespresent==0)
+            {
+                label10.Text = "Simple Majority: 0";
+            }
             if(remainder!=0)
             { 
             label10.Text="Simple Majority: "+ (majority+1);
             }
-            else if (remainder==0)
+            else if (remainder==0 & countriespresent!=0)
             {
                 label10.Text = "Simple Majority: " + (majority+1);
             }
@@ -1164,18 +1187,26 @@ namespace WindowsFormsApplication1
             }
 
 
-
-            if(countriespassed>=requiredvote)
+            if (countriesvoted != 0)
             {
-                System.Media.SystemSounds.Exclamation.Play();
-                MessageBox.Show("This resolution PASSED!" + "\n" + "Information:" + "\n" + "Number of voters: " + countriesvoted.ToString() + "\n" + "Two Thirds: " + requiredvote.ToString() + "\n" + "Number of yays: " + countriespassed.ToString() + "\n" + "Vote passed by: " + (countriespassed - requiredvote));
+
+                if (countriespassed >= requiredvote)
+                {
+                    System.Media.SystemSounds.Exclamation.Play();
+                    MessageBox.Show("This resolution PASSED!" + "\n" + "Information:" + "\n" + "Number of voters: " + countriesvoted.ToString() + "\n" + "Two Thirds: " + requiredvote.ToString() + "\n" + "Number of yays: " + countriespassed.ToString() + "\n" + "Vote passed by: " + (countriespassed - requiredvote));
+                }
+                else
+                {
+                    System.Media.SystemSounds.Exclamation.Play();
+                    MessageBox.Show("This resolution FAILED!" + "\n" + "Information:" + "\n" + "Number of voters: " + countriesvoted.ToString() + "\n" + "Two Thirds: " + requiredvote.ToString() + "\n" + "Number of yays: " + countriespassed.ToString() + "\n" + "Vote failed by: " + (requiredvote - countriespassed));
+
+                }
             }
             else
             {
-                System.Media.SystemSounds.Exclamation.Play();
-                MessageBox.Show("This resolution FAILED!" + "\n" + "Information:" + "\n" + "Number of voters: " + countriesvoted.ToString() + "\n" + "Two Thirds: " + requiredvote.ToString() + "\n" + "Number of yays: " + countriespassed.ToString() + "\n" + "Vote failed by: " + (requiredvote-countriespassed));
-                
+                MessageBox.Show("Nobody voted!");
             }
+
 
         }
 
@@ -1192,12 +1223,11 @@ namespace WindowsFormsApplication1
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            this.dataGridView1.ClearSelection();
+            
         }
-
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
-            this.dataGridView2.ClearSelection();
+            
         }
 
         private void textBox2_Leave(object sender, EventArgs e)
@@ -1253,6 +1283,94 @@ namespace WindowsFormsApplication1
                     textBox4.Text = "";
                 }
             }
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            foreach(DataGridViewRow row in dataGridView1.Rows)
+            {
+                row.Cells[1].Value = false;
+                row.Cells[2].Value = false;
+                row.Cells[3].Value = false;
+            }
+        }
+
+        private void tabControl1_Deselecting(object sender, TabControlCancelEventArgs e)
+        {
+            havetowarn = false;
+            foreach(DataGridViewRow row2 in dataGridView2.Rows)
+            {
+                if (Convert.ToBoolean(row2.Cells[1].Value) == false & Convert.ToBoolean(row2.Cells[2].Value) == false & Convert.ToBoolean(row2.Cells[3].Value) == false)
+                {
+                    if (havetowarn==false)
+                    {
+                   havetowarn = false;
+                    }
+                }
+                else
+                {
+                    havetowarn = true;
+                    
+                }
+            }
+            if(tabControl1.SelectedTab==tabPage6 & havetowarn==true)
+            {
+                DialogResult dialogResult = MessageBox.Show("This will remove all casted votes. Are you sure you want to do this?", "", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    e.Cancel=true;
+                }
+            }
+            if(tabControl1.SelectedTab==tabPage4)
+            {
+                if(timer1.Enabled==true || timer2.Enabled==true)
+                {
+                    DialogResult dialogResult = MessageBox.Show("This will will stop the caucus. Are you sure you want to do this?", "", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        label3.Text = "00";
+                            label8.Text="00:00:";
+                                timer1.Enabled=false;
+                        timer2.Enabled=false;
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+                        e.Cancel = true;
+                    }
+                }
+
+            }
+        }
+
+        public TabPage PreviousTab { get; set; }
+
+        private void dataGridView1_ColumnSortModeChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            dataGridView1.ClearSelection();
+        }
+
+        private void dataGridView2_ColumnSortModeChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            dataGridView2.ClearSelection();
+        }
+
+        private void dataGridView2_Sorted(object sender, EventArgs e)
+        {
+            dataGridView2.ClearSelection();
+        }
+
+        private void dataGridView1_Sorted(object sender, EventArgs e)
+        {
+            dataGridView1.ClearSelection();
         }
     }
 }
